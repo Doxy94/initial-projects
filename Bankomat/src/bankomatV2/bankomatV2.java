@@ -70,7 +70,7 @@ public class bankomatV2 {
 		//Hier wird ein neues Konto erstellt
 		Kontoklasse konto1 = new Kontoklasse();//Neues konto wurde erstellt
 		int kontostand = konto1.initialisieren(1000);//Neues konto wurde mit 1000chf initialisiert
-		
+		/*
 		//Schleife zur Kartenabfrage
 		while (bankkarte == false) //Solange keine Karte vorhanden wird danach gefragt
 		{
@@ -83,7 +83,7 @@ public class bankomatV2 {
 			{
 				System.out.println("Bitte einfach nur 'Karte' schreiben."); 		
 			}
-		}
+		}*/
 		//Pin wird 3 mal abgefragt
 		for (int i=3; zaehler < i; zaehler ++)
 		{
