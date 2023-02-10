@@ -1,0 +1,19 @@
+Funktionen:
+
+Pin änderung möglich
+Geld abgehen
+Geld einzahlen
+Kontostände checken
+Geld wechseln in EU und USD (auf ein 2. und 3. konto)
+
+
+Ablauf:
+- Bankkarte eingeben // Solange bis Karte vorhanden
+- Pin eingeben // 3 Versuche danach wird das Programm beendet
+- Begrüssung // 1 Mal 
+- auswahl was man tun möchte (1-5) // Bis zum Abbruch immer wiederholen
+- (1) Pin ändern // Nur 1 mal möglich innert 7 Tagen
+- (2) Gelb abheben 
+- (3) Gelb einzahlen
+- (4) Geldwechseln // Danach abfrage ob EU oder USD // Nur möglich wenn Geld auf dem Konto vorhanden
+- (5) Kontostände anzeigen lassen // die letzten 10 überweisungen/geldwechsel
