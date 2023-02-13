@@ -122,11 +122,11 @@ public class bankomatV2 {
 				//Begrüssung des Kunden
 				System.out.println("\nWilkommen bei der Bank Ihres vertrauens!");
 				//Auswahl der Handlungen
-				System.out.println("A: Pin ändern");
-				System.out.println("B: Geld abheben");
-				System.out.println("C: Geld einzahlen");
-				System.out.println("D: Geld wechseln");
-				System.out.println("E: Kontostände Prüfen\n");
+				System.out.println("1: Pin ändern");
+				System.out.println("2: Geld abheben");
+				System.out.println("3: Geld einzahlen");
+				System.out.println("4: Geld wechseln");
+				System.out.println("5: Kontostände Prüfen\n");
 				//Abfrage einer auswahl was als nächstes getan werden soll
 				input = Integer.parseInt(JOptionPane.showInputDialog("Was möchten Sie als nächstes tun?"));
 				//Nach der Auswahl wird entschieden was passiert
@@ -146,6 +146,7 @@ public class bankomatV2 {
 						else
 						{
 							System.out.println("Neue PINs stimmen nicht miteinander überein!");
+							System.out.println("Bitte versuchen Sie es erneut");
 						}
 					}
 					i ++;
