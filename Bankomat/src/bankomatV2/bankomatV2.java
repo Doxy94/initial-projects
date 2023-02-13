@@ -23,6 +23,23 @@ Ablauf:
 
 import javax.swing.JOptionPane;
 
+class Pinklasse 
+{
+	//Instantvariable deklarieren
+	int pin;
+	//Methode zum initialisieren
+	int initialisieren(int standard)
+	{
+		pin = standard; 
+		return standard;
+	}
+	//Methode zum ändern
+	void aendern(int aenderung)
+	{
+		pin = aenderung;
+	}
+}
+
 //Klasse Konto erstellen
 class Kontoklasse 
 {
@@ -61,16 +78,20 @@ public class bankomatV2 {
 		boolean bankkarte = false; //Bankkarte nicht vorhanden	
 		String karteVorhanden; //Kontrolle ob Bankkarte Vorhanden ist	
 		char auswahl; //Deklaration der Variable mit welcher eine Aktion ausgewählt wird im Switch-Case	
-		int pin,pinAbfrage,zaehler,input;
+		int pinAlt,pinNeu,pinAbfrage,zaehler,input;
 		
 		//Initialisierung
-		pin = 1234;
 		pinAbfrage = 0;
 		zaehler = 0;
 		//Hier wird ein neues Konto erstellt
 		Kontoklasse konto1 = new Kontoklasse();//Neues konto wurde erstellt
 		int kontostand = konto1.initialisieren(1000);//Neues konto wurde mit 1000chf initialisiert
 		
+		//Hier wird ein neuer PIN erstellt und Initialisiert
+		Pinklasse pin1 = new Pinklasse();
+		Pinklasse pin2 = new Pinklasse(); //Variable für den Neuen Pin
+		pinAlt = pin1.initialisieren(1234);
+		pinNeu = pin2.initialisieren(0);
 		//Schleife zur Kartenabfrage
 		while (bankkarte == false) //Solange keine Karte vorhanden wird danach gefragt
 		{
@@ -96,7 +117,7 @@ public class bankomatV2 {
 				System.out.println("Bitte den gültigen PIN eingeben!\n");
 			}
 			
-			if (pinAbfrage == pin)
+			if (pinAbfrage == pinAlt)
 			{
 				//Begrüssung des Kunden
 				System.out.println("\nWilkommen bei der Bank Ihres vertrauens!");
@@ -112,7 +133,21 @@ public class bankomatV2 {
 				switch(input) 
 				{
 				case 1://Pin ändern wurde ausgewählt 
-					
+					int pinKontrolle = Integer.parseInt(JOptionPane.showInputDialog("Geben Sie zunächst zur Kontrolle Ihren alten Pin ein."));
+					if (pinKontrolle == pinAlt)
+					{
+						pinNeu = Integer.parseInt(JOptionPane.showInputDialog("Geben Sie nun den neuen Pin ein"));
+						int pinKontrolleNeu = Integer.parseInt(JOptionPane.showInputDialog("Geben Sie den PIN zur Bestätigung erneut ein."));
+						if (pinNeu == pinKontrolleNeu)
+						{
+							System.out.println("Ihr PIN wurde erfolgreich geänder.");
+							pinAlt = pinNeu;
+						}
+						else
+						{
+							System.out.println("Neue PINs stimmen nicht miteinander überein!");
+						}
+					}
 					i ++;
 					break;
 				case 2://Geld abheben wurde ausgewählt
@@ -157,11 +192,6 @@ public class bankomatV2 {
 					System.exit(zaehler);
 				}
 			}
-		}
-		
-		
-		
-		
-		
+		}		
 	}	
 }
