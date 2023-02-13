@@ -94,41 +94,60 @@ public class bankomatV2 {
 		pinNeu = pin2.initialisieren(0);
 		//Schleife zur Kartenabfrage
 		while (bankkarte == false) //Solange keine Karte vorhanden wird danach gefragt
-		{
-			karteVorhanden = JOptionPane.showInputDialog(("Schreiben Sie 'Karte' um Ihre Bankkarte einzulegen!")); // Eingabe aufforderung
-			if (karteVorhanden.equalsIgnoreCase("Karte")) //Wenn eingabe wie gefordert 
-			{
-				bankkarte = true; // dann ist bankkarte vorhanden
-			}
-			else // passiert wenn karte falsche geschrieben wird
-			{
-				System.out.println("Bitte einfach nur 'Karte' schreiben."); 		
-			}
+		{	
+				karteVorhanden = JOptionPane.showInputDialog(("Schreiben Sie 'Karte' um Ihre Bankkarte einzulegen!")); // Eingabe aufforderung
+				if (karteVorhanden == null)
+				{
+					System.out.println("Sie haben das Programm beendet.");
+					System.exit(0);
+				}
+				if (karteVorhanden.equalsIgnoreCase("Karte")) //Wenn eingabe wie gefordert 
+				{
+					bankkarte = true; // dann ist bankkarte vorhanden
+				}
+				else // passiert wenn karte falsche geschrieben wird
+				{
+					System.out.println("Bitte einfach nur 'Karte' schreiben."); 		
+				}
 		}
 		//Pin wird 3 mal abgefragt
 		for (int i=3; zaehler < i; zaehler ++)
-		{
-			try
+		{	
+			try //Try pinabfrage
 			{
-			pinAbfrage = Integer.parseInt(JOptionPane.showInputDialog("Geben Sie Ihren gültigen PIN ein!"));
+			String pinEingabe = JOptionPane.showInputDialog("Geben Sie Ihren gültigen PIN ein!");
+			if (pinEingabe != null)
+			{
+				pinAbfrage = Integer.parseInt(pinEingabe);
 			}
+			else
+			{
+				System.out.println("Sie haben das Programm beendet");
+				System.exit(0);
+			}
+			}
+			//Catch pinabfrage
 			catch (Exception e)
 			{
-				System.out.println("Bitte den gültigen PIN eingeben!\n");
+				System.out.println("Bitte nur Zahlen eingeben.");
 			}
 			
 			if (pinAbfrage == pinAlt)
 			{
 				//Begrüssung des Kunden
-				System.out.println("\nWilkommen bei der Bank Ihres vertrauens!");
+				System.out.println("Wilkommen bei der Bank Ihres vertrauens!");
 				//Auswahl der Handlungen
 				System.out.println("1: Pin ändern");
 				System.out.println("2: Geld abheben");
 				System.out.println("3: Geld einzahlen");
 				System.out.println("4: Geld wechseln");
-				System.out.println("5: Kontostände Prüfen\n");
-				//Abfrage einer auswahl was als nächstes getan werden soll
+				System.out.println("5: Kontostände Prüfen");
+				//Try was tun
+				//try
+				//{
+				//Abfrage der auswahl was als nächstes getan werden soll
 				input = Integer.parseInt(JOptionPane.showInputDialog("Was möchten Sie als nächstes tun?"));
+
 				//Nach der Auswahl wird entschieden was passiert
 				switch(input) 
 				{
@@ -176,6 +195,12 @@ public class bankomatV2 {
 					i ++;
 					break;
 				}
+				//}
+				//Catch was tun
+				//catch (Exception el)
+				//{
+					//System.out.println("Ihre Eingabe war ungültig. Bitte PIN erneut eingeben");
+				//}
 			}
 			else 
 			{
