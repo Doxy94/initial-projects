@@ -20,12 +20,9 @@ Ablauf:
 
 
 TODO: (Testing)
-try catch bei abhebung und einzahlung einbauen
 maximale einzahlung einbauen 10k (alles darüber muss mit termin in der filiale eingezahlt werden)
 geld wechsel (entweder fixer kurs oder versuchen online abrufbare daten zu verwenden)
 kontostände erstellen für EU und USD + Initialisieren (wie beim wasserbehälter hin und her)
-bei der pin änderung falscheingabe abfangen und message ausgeben wenn der pin falsch war (der alte zur kontrolle)
-bei der pin änderung bei den neuen PINs fehleingabe abfangen 
 pin soll nur einmal alle 7 tage geändert werden können
 
 DANACH!!:
