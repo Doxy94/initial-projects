@@ -76,13 +76,16 @@ public class bankomatV2 {
 		
 		//Variablen deklaration
 		boolean bankkarte = false; //Bankkarte nicht vorhanden	
-		String karteVorhanden; //Kontrolle ob Bankkarte Vorhanden ist	
+		String karteVorhanden,inputSwitch,pinKontrolle,pinKontrolleNeu,pinEingabeNeu; //Kontrolle ob Bankkarte Vorhanden ist	
 		char auswahl; //Deklaration der Variable mit welcher eine Aktion ausgewählt wird im Switch-Case	
-		int pinAlt,pinNeu,pinAbfrage,zaehler,input;
+		int pinAlt,pinNeu,pinAbfrage,zaehler,input,einzahlen,pinEingabeAlt;
 		
 		//Initialisierung
 		pinAbfrage = 0;
 		zaehler = 0;
+		input = 0;
+		einzahlen = 0;
+		pinEingabeAlt = 0;
 		//Hier wird ein neues Konto erstellt
 		Kontoklasse konto1 = new Kontoklasse();//Neues konto wurde erstellt
 		int kontostand = konto1.initialisieren(1000);//Neues konto wurde mit 1000chf initialisiert
@@ -115,16 +118,16 @@ public class bankomatV2 {
 		{	
 			try //Try pinabfrage
 			{
-			String pinEingabe = JOptionPane.showInputDialog("Geben Sie Ihren gültigen PIN ein!");
-			if (pinEingabe != null)
-			{
-				pinAbfrage = Integer.parseInt(pinEingabe);
-			}
-			else
-			{
-				System.out.println("Sie haben das Programm beendet");
-				System.exit(0);
-			}
+				String pinEingabe = JOptionPane.showInputDialog("Geben Sie Ihren gültigen PIN ein!");
+				if (pinEingabe != null)
+				{
+					pinAbfrage = Integer.parseInt(pinEingabe);
+				}
+				else
+				{
+					System.out.println("\nSie haben das Programm beendet");
+					System.exit(0);
+				}
 			}
 			//Catch pinabfrage
 			catch (Exception e)
@@ -135,7 +138,7 @@ public class bankomatV2 {
 			if (pinAbfrage == pinAlt)
 			{
 				//Begrüssung des Kunden
-				System.out.println("Wilkommen bei der Bank Ihres vertrauens!");
+				System.out.println("\nWilkommen bei der Bank Ihres vertrauens!");
 				//Auswahl der Handlungen
 				System.out.println("1: Pin ändern");
 				System.out.println("2: Geld abheben");
@@ -143,43 +146,118 @@ public class bankomatV2 {
 				System.out.println("4: Geld wechseln");
 				System.out.println("5: Kontostände Prüfen");
 				//Try was tun
-				//try
-				//{
-				//Abfrage der auswahl was als nächstes getan werden soll
-				input = Integer.parseInt(JOptionPane.showInputDialog("Was möchten Sie als nächstes tun?"));
-
+				try
+				{	//Abfrage der auswahl was als nächstes getan werden soll
+					inputSwitch = JOptionPane.showInputDialog("Was möchten Sie als nächstes tun?");
+					if (inputSwitch != null) //Das passiert wenn der Abbrechen Button NICHT gedrückt wird
+					{
+						input = Integer.parseInt(inputSwitch);
+						if (input < 1 || input > 5)
+						{
+							System.out.println("Bitte nur Zahlen von 1 bis 5 eingeben!");
+						}
+						
+					}
+					else //Das passiert wenn der Abbrechen Button gedrückt wird
+					{
+						System.out.println("\nSie haben das Programm beendet");
+						System.exit(0);
+					}
+				}
+				//Catch was tun --> redundant(?)
+				catch (Exception ef)
+				{
+					System.out.println("Bitte nur Zahlen von 1 bis 5 eingeben!");
+				}
 				//Nach der Auswahl wird entschieden was passiert
 				switch(input) 
 				{
 				case 1://Pin ändern wurde ausgewählt 
-					int pinKontrolle = Integer.parseInt(JOptionPane.showInputDialog("Geben Sie zunächst zur Kontrolle Ihren alten Pin ein."));
-					if (pinKontrolle == pinAlt)
-					{
-						pinNeu = Integer.parseInt(JOptionPane.showInputDialog("Geben Sie nun den neuen Pin ein"));
-						int pinKontrolleNeu = Integer.parseInt(JOptionPane.showInputDialog("Geben Sie den PIN zur Bestätigung erneut ein."));
-						if (pinNeu == pinKontrolleNeu)
+					//Try pinKontrolle
+					try {
+						pinKontrolle = JOptionPane.showInputDialog("Geben Sie zunächst zur Kontrolle Ihren alten Pin ein.");
+						if (pinKontrolle != null)
 						{
-							System.out.println("Ihr PIN wurde erfolgreich geänder.");
-							pinAlt = pinNeu;
+							pinEingabeAlt = Integer.parseInt(pinKontrolle);						
+							if (pinEingabeAlt == pinAlt)
+							{
+								//TRY NEUER PIN EINGABE
+								pinEingabeNeu = JOptionPane.showInputDialog("Geben Sie nun den neuen Pin ein");
+								if (pinEingabeNeu != null)
+								{	
+									pinNeu = Integer.parseInt(pinEingabeNeu);
+									pinKontrolleNeu = JOptionPane.showInputDialog("Geben Sie den PIN zur Bestätigung erneut ein.");
+									int pinKontrolleNeuer = Integer.parseInt(pinKontrolleNeu);
+									if (pinKontrolleNeu != null && pinNeu == pinKontrolleNeuer)
+									{
+									pinNeu = Integer.parseInt(pinEingabeNeu);
+									System.out.println("Ihr PIN wurde erfolgreich geändert.");
+									pinAlt = pinNeu;									
+									}
+									else 
+									{
+										System.out.println("Die PINs stimmen nicht miteinander überein.");
+										System.out.println("Versuchen Sie es erneut.");
+									}
+								}
+							}
 						}
 						else
 						{
-							System.out.println("Neue PINs stimmen nicht miteinander überein!");
-							System.out.println("Bitte versuchen Sie es erneut");
+							System.out.println("\nSie haben das Programm beendet");
+							System.exit(0);							
+						}
+						}
+					catch (Exception e)
+					{
+						System.out.println("Sie haben Ihren PIN falsch eingegeben.");
+						System.out.println("Bitte versuchen Sie es erneut.");
+					}
+						i ++;
+						break;
+				case 2://Geld abheben wurde ausgewählt
+					try
+					{	
+						String abhebenEingabe = JOptionPane.showInputDialog("Wie viel Geld möchten Sie abheben?"); //Abfrage wie viel geld Abgehoben werden soll
+						if (abhebenEingabe != null)
+						{
+							int abheben = Integer.parseInt(abhebenEingabe);
+							kontostand = konto1.abheben(abheben); //Neuer Kontostand wird berechnet
+							System.out.println("Ihr neuer Kontostand lautet: " + kontostand + ".- CHF");
+						}
+						else
+						{
+							System.out.println("\nSie haben das Programm beendet");
+							System.exit(0);
 						}
 					}
-					i ++;
-					break;
-				case 2://Geld abheben wurde ausgewählt
-					int abheben = Integer.parseInt(JOptionPane.showInputDialog("Wie viel Geld möchten Sie abheben?")); //Abfrage wie viel geld Abgehoben werden soll
-					kontostand = konto1.abheben(abheben); //Neuer Kontostand wird berechnet
-					System.out.println("Ihr neuer Kontostand lautet: " + kontostand + ".- CHF");
+					catch (Exception e)
+					{
+						System.out.println("Bitte geben Sie nur den Betrag ein, den Sie abheben möchten.");
+					}
+						
 					i ++; 
 					break;
 				case 3://Geld einzahlen wurde ausgewählt 
-					int einzahlen = Integer.parseInt(JOptionPane.showInputDialog("Wie viel Geld möchten Sie einzahlen?")); //Abfrage wie viel geld Eingezahlt werden soll
-					kontostand = konto1.einzahlen(einzahlen); //Neuer Kontostand wird berechnet
-					System.out.println("Ihr neuer Kontostand lautet: " + kontostand + ".- CHF"); //Kontostand output
+					try
+					{
+						String einzahlenEingabe = JOptionPane.showInputDialog("Wie viel Geld möchten Sie einzahlen?"); //Abfrage wie viel geld Eingezahlt werden soll
+						if (einzahlenEingabe != null)
+						{
+							einzahlen = Integer.parseInt(einzahlenEingabe);
+							kontostand = konto1.einzahlen(einzahlen); //Neuer Kontostand wird berechnet
+							System.out.println("Ihr neuer Kontostand lautet: " + kontostand + ".- CHF"); //Kontostand output
+						}
+						else
+						{
+							System.out.println("\nSie haben das Programm beendet");
+							System.exit(0);
+						}
+					}
+					catch (Exception e)
+					{
+						System.out.println("Bitte geben Sie nur den Betrag ein, den Sie einzahlen möchten.");
+					}
 					i ++;
 					break;
 				case 4://Geld wechseln wurde ausgewählt
@@ -191,28 +269,21 @@ public class bankomatV2 {
 					i ++;
 					break;
 				default://Standardaktion bei ungültiger Eingabe 
-					System.out.println("Bitte nur Zahlen von 1 bis 5 eingeben!");
 					i ++;
 					break;
 				}
-				//}
-				//Catch was tun
-				//catch (Exception el)
-				//{
-					//System.out.println("Ihre Eingabe war ungültig. Bitte PIN erneut eingeben");
-				//}
 			}
 			else 
 			{
-				if (zaehler == 0)
+				if (i - zaehler == 3)
 				{
 					System.out.println("Falscher PIN, bitte erneut versuchen\n");
 				}
-				if (zaehler == 1)
+				if (i - zaehler == 2)
 				{
 					System.out.println("ACHTUNG! Sie haben nur noch einen versuch!\n");
 				}
-				if (zaehler == 2)
+				if (i - zaehler == 1)
 				{
 					System.out.println("PIN 3 mal falsch eingegeben, das System wird aus Sicherheitsgründen beendet!");
 					System.exit(zaehler);

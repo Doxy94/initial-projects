@@ -20,8 +20,7 @@ Ablauf:
 
 
 TODO: (Testing)
-switch case abfangen (buchstaben und sonderzeichen) --> gleiches Prinzip wie bei Pinabfrage
-wenn der pin bereits falsch eingegeben wurde, und danach geändert wird und das 3. mal falsch eingegeben wird, wird das programm beendet ohne meldung..
+try catch bei abhebung und einzahlung einbauen
 maximale einzahlung einbauen 10k (alles darüber muss mit termin in der filiale eingezahlt werden)
 geld wechsel (entweder fixer kurs oder versuchen online abrufbare daten zu verwenden)
 kontostände erstellen für EU und USD + Initialisieren (wie beim wasserbehälter hin und her)
