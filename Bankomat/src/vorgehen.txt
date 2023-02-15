@@ -24,6 +24,6 @@ maximale einzahlung einbauen 10k (alles darüber muss mit termin in der filiale 
 geld wechsel (entweder fixer kurs oder versuchen online abrufbare daten zu verwenden)
 kontostände erstellen für EU und USD + Initialisieren (wie beim wasserbehälter hin und her)
 pin soll nur einmal alle 7 tage geändert werden können
-
+kommentare und variablennamen anpassen um für mehr übersicht zu sorgen
 DANACH!!:
 Raspberry als Linux Server aufsetzen und eine Datenbank anbingung herstellen.
