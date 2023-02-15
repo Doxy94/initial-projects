@@ -10,15 +10,15 @@ Geld wechseln in EU und USD (auf ein 2. und 3. konto)
 
 
 Ablauf:
-- Bankkarte eingeben // Solange bis Karte vorhanden
-- Pin eingeben // 3 Versuche danach wird das Programm beendet
-- Begrüssung // 1 Mal 
-- auswahl was man tun möchte (1-5) // Bis zum Abbruch immer wiederholen
+- Bankkarte eingeben
+- Pin eingeben
+- Begrüssung
+- Auswahl was man tun möchte (1-5) 
 - (1) Pin ändern // Nur 1 mal möglich innert 7 Tagen
 - (2) Gelb abheben 
 - (3) Gelb einzahlen
-- (4) Geldwechseln // Danach abfrage ob EU oder USD // Nur möglich wenn Geld auf dem Konto vorhanden
-- (5) Kontostände anzeigen lassen // die letzten 10 überweisungen/geldwechsel
+- (4) Geldwechseln
+- (5) Kontostände anzeigen lassen
 */
 
 import javax.swing.JOptionPane;
@@ -67,6 +67,15 @@ class Kontoklasse
 	//Methode zum Geld einzahlen
 	int einzahlen(int aenderung)
 	{
+		
+		if (aenderung > 5000)
+		{
+			System.out.println("Für eine Einzahlung über 5.000 CHF müssen Sie einen Termin in der Filiale vereinbaren.");
+		}
+		else 
+		{
+			System.out.println("Ihr Geld wurde erfolgreich eingezahlt.");
+		}
 		return konto = konto + aenderung;
 	}
 	
@@ -87,13 +96,19 @@ public class bankomatV2 {
 		pinEingabe = 0;
 		
 		//Hier werden neue Bankkonten erstellt
-		Kontoklasse konto1 = new Kontoklasse();//Neues konto wurde erstellt
-		int kontostand = konto1.initialisieren(1000);//Neues konto wurde mit 1000chf initialisiert
+		Kontoklasse kontoCHF = new Kontoklasse();//Neues Konto für CHF wurde erstellt
+		int kontostandCHF = kontoCHF.initialisieren(1000);//Neues Konto wurde mit 1000CHF initialisiert
+		
+		Kontoklasse kontoEUR = new Kontoklasse();//Neues Konto für EURO wurde erstellt
+		int kontostandEUR = kontoEUR.initialisieren(1000);//Neues Konto wurde mit 1000EUR initialisiert
+		
+		Kontoklasse kontoUSD = new Kontoklasse();//Neues Konto für USD wurde erstellt
+		int kontostandUSD = kontoUSD.initialisieren(1000);//Neues Konto wurde mit 1000USD initialisiert
 		
 		//Hier werden die PINs erstellt und Initialisiert
 		Pinklasse pin1 = new Pinklasse(); //Variable für den alten pin
-		Pinklasse pin2 = new Pinklasse(); //Variable für den Neuen Pin
 		pinAlt = pin1.initialisieren(1234); //PIN wird auf 1234 festgelegt
+		Pinklasse pin2 = new Pinklasse(); //Variable für den Neuen Pin
 		pinNeu = pin2.initialisieren(0); //Neuer PIN wird initialisiert damit man mit der Variable arbeiten kann
 		
 		/*
@@ -130,7 +145,7 @@ public class bankomatV2 {
 				}
 				else //Das passiert wenn Abbrechen gedrückt wird
 				{
-					System.out.println("\nSie haben das Programm beendet");
+					System.out.println("\nSie haben das Programm beendet.");
 					System.exit(0);
 				}
 			}
@@ -165,7 +180,7 @@ public class bankomatV2 {
 					}
 					else //Das passiert wenn der Abbrechen Button gedrückt wird
 					{
-						System.out.println("\nSie haben das Programm beendet");
+						System.out.println("\nSie haben das Programm beendet.");
 						System.exit(0);
 					}
 				}
@@ -187,7 +202,7 @@ public class bankomatV2 {
 							if (pinEingabe == pinAlt) //Eingabe wird mit PIN verglichen
 							{
 								//TRY PIN Änderung
-								pinEingabeNeu = JOptionPane.showInputDialog("Geben Sie nun den neuen Pin ein");//Der neue PIN wird abgefragt
+								pinEingabeNeu = JOptionPane.showInputDialog("Geben Sie nun den neuen Pin ein.");//Der neue PIN wird abgefragt
 								if (pinEingabeNeu != null) //Das passiert wenn der Abbrechen Button NICHT gedrückt wird
 								{	
 									pinNeu = Integer.parseInt(pinEingabeNeu);//Eingabe wird in einen Integer umgewandelt
@@ -195,7 +210,6 @@ public class bankomatV2 {
 									int pinKontrolleNeu = Integer.parseInt(pinBestaetigung); //Erneute Eingabe wird in einen Integer umgewandelt
 									if (pinBestaetigung != null && pinNeu == pinKontrolleNeu) //Das passiert wenn der Abbrechen Button NICHT gedrückt wurde UND wenn die neuen PINs identisch sind
 									{
-	//Redundant(?)						pinNeu = Integer.parseInt(pinEingabeNeu);
 										System.out.println("Ihr PIN wurde erfolgreich geändert.");
 										pinAlt = pinNeu;//PIN wird geändert									
 									}
@@ -209,7 +223,7 @@ public class bankomatV2 {
 						}
 						else //Das passiert wenn der Abbrechen Button gedrückt wird
 						{
-							System.out.println("\nSie haben das Programm beendet");
+							System.out.println("\nSie haben das Programm beendet.");
 							System.exit(0);							
 						}
 						}
@@ -227,12 +241,12 @@ public class bankomatV2 {
 						if (abhebenEingabe != null)//Das passiert wenn der Abbrechen Button NICHT gedrückt wurde
 						{
 							int abheben = Integer.parseInt(abhebenEingabe);//Eingabe wird in einen Integer umgewandelt
-							kontostand = konto1.abheben(abheben); //Neuer Kontostand wird berechnet
-							System.out.println("Ihr neuer Kontostand lautet: " + kontostand + ".- CHF");//Kontostand output
+							kontostandCHF = kontoCHF.abheben(abheben); //Neuer Kontostand wird berechnet
+							System.out.println("Ihr neuer Kontostand lautet: " + kontostandCHF + ".- CHF");//Kontostand output
 						}
 						else //Das passiert wenn Abbrechen gedrückt wird
 						{
-							System.out.println("\nSie haben das Programm beendet");
+							System.out.println("\nSie haben das Programm beendet.");
 							System.exit(0);
 						}
 					}
@@ -250,12 +264,12 @@ public class bankomatV2 {
 						if (einzahlenEingabe != null)//Das passiert wenn der Abbrechen Button NICHT gedrückt wurde
 						{
 							einzahlen = Integer.parseInt(einzahlenEingabe);//Eingabe wird in einen Integer umgewandelt
-							kontostand = konto1.einzahlen(einzahlen); //Neuer Kontostand wird berechnet
-							System.out.println("Ihr neuer Kontostand lautet: " + kontostand + ".- CHF"); //Kontostand output
+							kontostandCHF = kontoCHF.einzahlen(einzahlen); //Neuer Kontostand wird berechnet
+							System.out.println("Ihr neuer Kontostand lautet: " + kontostandCHF + ".- CHF"); //Kontostand output
 						}
 						else//Das passiert wenn Abbrechen gedrückt wird
 						{
-							System.out.println("\nSie haben das Programm beendet");
+							System.out.println("\nSie haben das Programm beendet.");
 							System.exit(0);
 						}
 					}
@@ -271,7 +285,9 @@ public class bankomatV2 {
 					i ++; //Iteration von i
 					break; //Verlassen des case
 				case 5://Kontostand anzeigen wurde ausgewählt
-					System.out.println("Ihr aktueller Kontostand lautet: " + kontostand + ".- CHF");
+					System.out.println("Ihr aktueller Kontostand lautet: " + kontostandCHF + ".- CHF");
+					System.out.println("Ihr aktueller Kontostand lautet: " + kontostandEUR + ".- EUR");
+					System.out.println("Ihr aktueller Kontostand lautet: " + kontostandUSD + ".- USD");
 					i ++; //Iteration von i
 					break; //Verlassen des case
 				default://Standardaktion bei ungültiger Eingabe 
@@ -283,7 +299,7 @@ public class bankomatV2 {
 			{
 				if (i - zaehlerFOR == 3) //Erste falsche PIN Eingabe
 				{
-					System.out.println("Falscher PIN, bitte erneut versuchen\n");
+					System.out.println("Falscher PIN, bitte erneut versuchen.\n");
 				}
 				if (i - zaehlerFOR == 2)//Zweite falsche PIN Eingabe
 				{
