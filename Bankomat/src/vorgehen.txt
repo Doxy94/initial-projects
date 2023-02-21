@@ -3,25 +3,25 @@ Funktionen:
 Pin änderung möglich
 Geld abgehen
 Geld einzahlen
-Kontostände checken
 Geld wechseln in EU und USD (auf ein 2. und 3. konto)
-
+Kontostände checken
 
 Ablauf:
 - Bankkarte eingeben // Solange bis Karte vorhanden
 - Pin eingeben // 3 Versuche danach wird das Programm beendet
-- Begrüssung // 1 Mal 
-- auswahl was man tun möchte (1-5) // Bis zum Abbruch immer wiederholen
+- Begrüssung 
+- Auswahl was man tun möchte (1-5) // Bis zum Abbruch immer wiederholen
 - (1) Pin ändern // Nur 1 mal möglich innert 7 Tagen
 - (2) Gelb abheben 
 - (3) Gelb einzahlen
 - (4) Geldwechseln // Danach abfrage ob EU oder USD // Nur möglich wenn Geld auf dem Konto vorhanden
-- (5) Kontostände anzeigen lassen // die letzten 10 überweisungen/geldwechsel
+- (5) Kontostände anzeigen lassen
 
 
 TODO: (Testing)
-geld wechsel (entweder fixer kurs oder versuchen online abrufbare daten zu verwenden) --> Konten sind erstellt und mit 1k initialisiert 
-kontostände (wie beim wasserbehälter hin und her)
+geldwechsel kommentieren und variablenname kontrollieren wenn funktion fertig --> aufpassen mit der iteration von i und den break --> debuggen um richtige anzahl zu ermitteln
+einmalige pinänderung einbauen --> output: nur alle sieben tage möglich sorry :(
+einzahlung und auszahlung in USD,EUR und CHF möglich machen
 
-DANACH!!:
-Raspberry als Linux Server aufsetzen und eine Datenbank anbingung herstellen.
+DANACH(?):
+Raspberry als Linux/Win 10 IoT(?) Server aufsetzen und eine Datenbank anbingung herstellen.
