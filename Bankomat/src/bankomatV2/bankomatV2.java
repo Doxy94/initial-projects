@@ -61,7 +61,7 @@ public class bankomatV2 {
 	public static void main (String[] args) {	
 		
 		//Variablen deklaration
-		boolean bankkarte = false; //Bankkarte nicht vorhanden
+		boolean bankkarte,pinGeaendert; //Bankkarte nicht vorhanden
 		String kartenEingabe,switchEingabe,pinKontrolle,pinBestaetigung,pinEingabeNeu;	//Alle Eingaben, die später in Zahlen umgewandelt werden
 		int pinAlt,pinNeu,pinInteger,zaehlerFOR,switchCase,pinEingabe,switchGeldWechseln,switchHandel;
 		
@@ -70,10 +70,11 @@ public class bankomatV2 {
 		zaehlerFOR = 0;
 		switchCase = 0;
 		switchGeldWechseln = 0;
-
 		switchHandel = 0;
 		pinEingabe = 0;
 		
+		bankkarte = false;
+		pinGeaendert = false;
 		//Wechselkurse deklariert und initialisiert
 		double CHFzuUSD,CHFzuEUR,USDzuCHF,USDzuEUR,EURzuUSD,EURzuCHF;
 		//Wechselkurs Franken
@@ -153,8 +154,8 @@ public class bankomatV2 {
 				System.out.println("\nWilkommen bei der Bank Ihres vertrauens!");
 				//Auswahl der Handlungen
 				System.out.println("1: Pin ändern");
-				System.out.println("2: Geld abheben");
-				System.out.println("3: Geld einzahlen");
+				System.out.println("2: Geld abheben (nur CHF)");
+				System.out.println("3: Geld einzahlen (nur CHF)");
 				System.out.println("4: Geld wechseln");
 				System.out.println("5: Kontostände Prüfen");
 				//Try Switch
@@ -184,44 +185,52 @@ public class bankomatV2 {
 				switch(switchCase) 
 				{
 				case 1://Pin ändern wurde ausgewählt 
-					//Try pinKontrolle
-					try {
-						pinKontrolle = JOptionPane.showInputDialog("Geben Sie zunächst zur Kontrolle Ihren alten Pin ein.");//Der PIN wird abgefragt
-						if (pinKontrolle != null) //Das passiert wenn der Abbrechen Button NICHT gedrückt wird
-						{
-							pinEingabe = Integer.parseInt(pinKontrolle);	//Eingabe wird in einen Integer umgewandelt					
-							if (pinEingabe == pinAlt) //Eingabe wird mit PIN verglichen
+					if (pinGeaendert == false) //Kontrolliert ob der Pin schon einmal geändert wurde
+					{
+						//Try pinKontrolle
+						try {
+							pinKontrolle = JOptionPane.showInputDialog("Geben Sie zunächst zur Kontrolle Ihren alten Pin ein.");//Der PIN wird abgefragt
+							if (pinKontrolle != null) //Das passiert wenn der Abbrechen Button NICHT gedrückt wird
 							{
-								//TRY PIN Änderung
-								pinEingabeNeu = JOptionPane.showInputDialog("Geben Sie nun den neuen Pin ein.");//Der neue PIN wird abgefragt
-								if (pinEingabeNeu != null) //Das passiert wenn der Abbrechen Button NICHT gedrückt wird
-								{	
-									pinNeu = Integer.parseInt(pinEingabeNeu);//Eingabe wird in einen Integer umgewandelt
-									pinBestaetigung = JOptionPane.showInputDialog("Geben Sie den PIN zur Bestätigung erneut ein.");//Der neue PIN wird erneut zur Kontrolle erneut abgefragt
-									int pinKontrolleNeu = Integer.parseInt(pinBestaetigung); //Erneute Eingabe wird in einen Integer umgewandelt
-									if (pinBestaetigung != null && pinNeu == pinKontrolleNeu) //Das passiert wenn der Abbrechen Button NICHT gedrückt wurde UND wenn die neuen PINs identisch sind
-									{
-										System.out.println("Ihr PIN wurde erfolgreich geändert.");
-										pinAlt = pinNeu;//PIN wird geändert									
-									}
-									else //Das passiert wenn die neuen PINs nicht miteinander übereinstimmen
-									{
-										System.out.println("Die PINs stimmen nicht miteinander überein.");
-										System.out.println("Versuchen Sie es erneut.");
+								pinEingabe = Integer.parseInt(pinKontrolle);	//Eingabe wird in einen Integer umgewandelt					
+								if (pinEingabe == pinAlt) //Eingabe wird mit PIN verglichen
+								{
+									//TRY PIN Änderung
+									pinEingabeNeu = JOptionPane.showInputDialog("Geben Sie nun den neuen Pin ein.");//Der neue PIN wird abgefragt
+									if (pinEingabeNeu != null) //Das passiert wenn der Abbrechen Button NICHT gedrückt wird
+									{	
+										pinNeu = Integer.parseInt(pinEingabeNeu);//Eingabe wird in einen Integer umgewandelt
+										pinBestaetigung = JOptionPane.showInputDialog("Geben Sie den PIN zur Bestätigung erneut ein.");//Der neue PIN wird erneut zur Kontrolle erneut abgefragt
+										int pinKontrolleNeu = Integer.parseInt(pinBestaetigung); //Erneute Eingabe wird in einen Integer umgewandelt
+										if (pinBestaetigung != null && pinNeu == pinKontrolleNeu) //Das passiert wenn der Abbrechen Button NICHT gedrückt wurde UND wenn die neuen PINs identisch sind
+										{
+											System.out.println("Ihr PIN wurde erfolgreich geändert.");
+											pinAlt = pinNeu;//PIN wird geändert
+											pinGeaendert = true;
+										}
+										else //Das passiert wenn die neuen PINs nicht miteinander übereinstimmen
+										{
+											System.out.println("Die PINs stimmen nicht miteinander überein.");
+											System.out.println("Versuchen Sie es erneut.");
+										}
 									}
 								}
 							}
-						}
-						else //Das passiert wenn der Abbrechen Button gedrückt wird
+							else //Das passiert wenn der Abbrechen Button gedrückt wird
+							{
+								System.out.println("\nSie haben das Programm beendet.");
+								System.exit(0);							
+							}
+							}
+						catch (Exception e) //Catch pinKontrolle
 						{
-							System.out.println("\nSie haben das Programm beendet.");
-							System.exit(0);							
+							System.out.println("Sie haben Ihren PIN falsch eingegeben.");
+							System.out.println("Bitte versuchen Sie es erneut.");
 						}
-						}
-					catch (Exception e) //Catch pinKontrolle
+					}
+					else
 					{
-						System.out.println("Sie haben Ihren PIN falsch eingegeben.");
-						System.out.println("Bitte versuchen Sie es erneut.");
+						System.out.println("Sie können den PIN nur einmal alle 7 Tage ändern.");
 					}
 						i ++; //Iteration von i
 						break; //Verlassen des case
@@ -233,7 +242,7 @@ public class bankomatV2 {
 						{
 							int abheben = Integer.parseInt(abhebenEingabe);//Eingabe wird in einen Integer umgewandelt
 							kontostandCHF = kontoCHF.abheben(abheben); //Neuer Kontostand wird berechnet
-							System.out.println("Ihr neuer Kontostand lautet: " + (int)kontostandCHF + ".- CHF");//Kontostand output
+							System.out.println("Ihr neuer Kontostand lautet: " + String.format("%1$,.2f", kontostandCHF) + ".- CHF");//Kontostand output
 						}
 						else //Das passiert wenn Abbrechen gedrückt wird
 						{
@@ -255,7 +264,7 @@ public class bankomatV2 {
 						{
 							int einzahlen = Integer.parseInt(einzahlenEingabe);//Eingabe wird in einen Integer umgewandelt
 							kontostandCHF = kontoCHF.einzahlen(einzahlen); //Neuer Kontostand wird berechnet
-							System.out.println("Ihr neuer Kontostand lautet: " + (int)kontostandCHF + ".- CHF"); //Kontostand output
+							System.out.println("Ihr neuer Kontostand lautet: " + String.format("%1$,.2f", kontostandCHF) + ".- CHF"); //Kontostand output
 						}
 						else//Das passiert wenn Abbrechen gedrückt wird
 						{
@@ -291,7 +300,7 @@ public class bankomatV2 {
 					{
 						System.out.println("Bitte nur Zahlen von 1 bis 3 eingeben!");
 					}
-					switch(switchGeldWechseln)
+					switch(switchGeldWechseln) //Auswahl welche Währung man handeln möchte
 					{	
 						case 1://CHF handeln
 								try
@@ -310,60 +319,57 @@ public class bankomatV2 {
 										System.out.println("\nSie haben das Programm beendet.");
 										System.exit(0);
 									}
-									switch(switchHandel)
+									switch(switchHandel) 
 									{
 									case 1: //Kauf USD für CHF
 										System.out.println("Sie haben Sich entschieden USD für CHF zu kaufen.");
-										String chfUSD = JOptionPane.showInputDialog("Wie viel CHF möchten Sie verkaufen?");
-										if (chfUSD != null)
+										String chfUSD = JOptionPane.showInputDialog("Wie viel CHF möchten Sie verkaufen?"); //Abfrage wie viel CHF verkauft werden sollen
+										if (chfUSD != null)//Das passiert wenn der Abbrechen Button NICHT gedrückt wird
 										{
-											double wechselCHFDouble = Double.parseDouble(chfUSD);
-											if (wechselCHFDouble > kontostandCHF)
+											double wechselCHFDouble = Double.parseDouble(chfUSD); //Eingabe wird in einen Double umgewandelt
+											if (wechselCHFDouble > kontostandCHF) //Wird ausgeführt wenn Eingabe grösser als Kontostand ist
 											{
 												System.out.println("Sie können nicht mehr Geld handeln, als auf Ihrem Konto vorhanden ist.");
 											}
 											else
 											{
-												kontostandCHF = kontostandCHF - wechselCHFDouble;
-												kontostandUSD = kontostandUSD + wechselCHFDouble * CHFzuUSD;
-												System.out.println("Sie haben erfolgreich " + wechselCHFDouble + " CHF verkauft und " + wechselCHFDouble * CHFzuUSD + " USD gekauft.");
-												System.out.println("CHF: " + kontostandCHF + "\tUSD: " + kontostandUSD);
+												kontostandCHF = kontostandCHF - wechselCHFDouble; //CHF werden verkauft
+												kontostandUSD = kontostandUSD + wechselCHFDouble * CHFzuUSD; // USD werden gekauft
+												System.out.println("Sie haben erfolgreich " + wechselCHFDouble + " CHF verkauft und " + String.format("%1$,.2f", wechselCHFDouble * CHFzuUSD) + " USD gekauft."); //Bestätigung des handels
+												System.out.println("Ihre aktuellen Kontostände lauten: CHF: " + String.format("%1$,.2f", kontostandCHF) + "\tUSD: " + String.format("%1$,.2f", kontostandUSD)); //Kontostände ausgabe
 											}
 										}
-										else 
+										else //Das passiert wenn der Abbrechen Button gedrückt wird
 										{
 											System.out.println("\nSie haben das Programm beendet.");
 											System.exit(0);		
 										}
-										i ++; //Iteration von i
 										break; //Verlassen des case
 									case 2: //Kauf EUR für CHF
 										System.out.println("Sie haben Sich entschieden EUR für CHF zu kaufen.");
-										String chfEUR = JOptionPane.showInputDialog("Wie viel CHF möchten Sie verkaufen?");
-										if (chfEUR != null)
+										String chfEUR = JOptionPane.showInputDialog("Wie viel CHF möchten Sie verkaufen?"); //Abfrage wie viel CHF verkauft werden sollen
+										if (chfEUR != null)//Das passiert wenn der Abbrechen Button NICHT gedrückt wird
 										{
-											double wechselCHFDouble = Double.parseDouble(chfEUR);
-											if (wechselCHFDouble > kontostandCHF)
+											double wechselCHFDouble = Double.parseDouble(chfEUR);//Eingabe wird in einen Double umgewandelt
+											if (wechselCHFDouble > kontostandCHF)//Wird ausgeführt wenn Eingabe grösser als Kontostand ist
 											{
 												System.out.println("Sie können nicht mehr Geld handeln, als auf Ihrem Konto vorhanden ist.");
 											}
 											else
 											{
-												kontostandCHF = kontostandCHF - wechselCHFDouble;
-												kontostandEUR = kontostandEUR + wechselCHFDouble * CHFzuEUR;
-												System.out.println("Sie haben erfolgreich " + wechselCHFDouble + " CHF verkauft und " + wechselCHFDouble * CHFzuEUR + " EUR gekauft.");
-												System.out.println("CHF: " + kontostandCHF + "\tEUR: " + kontostandEUR);
+												kontostandCHF = kontostandCHF - wechselCHFDouble;//CHF werden verkauft
+												kontostandEUR = kontostandEUR + wechselCHFDouble * CHFzuEUR;// EUR werden gekauft
+												System.out.println("Sie haben erfolgreich " + wechselCHFDouble + " CHF verkauft und " + String.format("%1$,.2f", wechselCHFDouble * CHFzuEUR) + " EUR gekauft.");//Bestätigung des handels
+												System.out.println("CHF: " + String.format("%1$,.2f", kontostandCHF) + "\tEUR: " + String.format("%1$,.2f", kontostandEUR));//Kontostände ausgabe
 											}
 										}
-										else 
+										else //Das passiert wenn der Abbrechen Button gedrückt wird
 										{
 											System.out.println("\nSie haben das Programm beendet.");
 											System.exit(0);		
 										}
-										i ++; //Iteration von i
 										break; //Verlassen des case
 									default:
-										i ++; //Iteration von i
 										break; //Verlassen des case
 									}
 								}
@@ -371,7 +377,6 @@ public class bankomatV2 {
 								{
 									System.out.println("Bitte nur Zahlen von 1 bis 3 eingeben!");
 								}
-								i ++; //Iteration von i
 								break; //Verlassen des case
 						case 2://USD tauschen
 							try
@@ -394,64 +399,60 @@ public class bankomatV2 {
 								{
 								case 1: //Kauf CHF für USD
 									System.out.println("Sie haben Sich entschieden CHF für USD zu kaufen.");
-									String usdCHF = JOptionPane.showInputDialog("Wie viel USD möchten Sie verkaufen?");
-									if (usdCHF != null)
+									String usdCHF = JOptionPane.showInputDialog("Wie viel USD möchten Sie verkaufen?"); //Abfrage wie viel USD verkauft werden sollen
+									if (usdCHF != null)//Das passiert wenn der Abbrechen Button NICHT gedrückt wird
 									{
-										double wechselUSDDouble = Double.parseDouble(usdCHF);
-										if (wechselUSDDouble > kontostandCHF)
+										double wechselUSDDouble = Double.parseDouble(usdCHF);//Eingabe wird in einen double umgewandelt
+										if (wechselUSDDouble > kontostandUSD)//Wird ausgeführt wenn Eingabe grösser als Kontostand ist
 										{
 											System.out.println("Sie können nicht mehr Geld handeln, als auf Ihrem Konto vorhanden ist.");
 										}
 										else
 										{
-											kontostandUSD = kontostandUSD - wechselUSDDouble;
-											kontostandCHF = kontostandCHF + wechselUSDDouble * USDzuCHF;
-											System.out.println("Sie haben erfolgreich " + wechselUSDDouble + " USD verkauft und " + wechselUSDDouble * USDzuCHF + " CHF gekauft.");
-											System.out.println("USD: " + kontostandUSD + "\tCHF: " + kontostandCHF);
+											kontostandUSD = kontostandUSD - wechselUSDDouble;//USD werden verkauft
+											kontostandCHF = kontostandCHF + wechselUSDDouble * USDzuCHF; //CHF werden gekauft
+											System.out.println("Sie haben erfolgreich " + wechselUSDDouble + " USD verkauft und " + String.format("%1$,.2f", wechselUSDDouble * USDzuCHF) + " CHF gekauft."); //Bestätigung des Handels
+											System.out.println("USD: " + String.format("%1$,.2f", kontostandUSD) + "\tCHF: " + String.format("%1$,.2f", kontostandCHF)); //Kontostände Ausgabe
 										}
 									}
-									else 
+									else //Das passiert wenn der Abbrechen Button gedrückt wird
 									{
 										System.out.println("\nSie haben das Programm beendet.");
 										System.exit(0);		
 									}
-									i++;
-									break;
+									break;//Verlassen des case
 								case 2: //Kauf EUR für USD
 									System.out.println("Sie haben Sich entschieden EUR für USD zu kaufen.");
-									String usdEUR = JOptionPane.showInputDialog("Wie viel USD möchten Sie verkaufen?");
-									if (usdEUR != null)
+									String usdEUR = JOptionPane.showInputDialog("Wie viel USD möchten Sie verkaufen?");//Abfrage wie viel USD verkauft werden sollen
+									if (usdEUR != null)//Das passiert wenn der Abbrechen Button NICHT gedrückt wird
 									{
-										double wechselUSDDouble = Double.parseDouble(usdEUR);
-										if (wechselUSDDouble > kontostandCHF)
+										double wechselUSDDouble = Double.parseDouble(usdEUR);//Eingabe wird in einen double umgewandelt
+										if (wechselUSDDouble > kontostandCHF)//Wird ausgeführt wenn Eingabe grösser als Kontostand ist
 										{
 											System.out.println("Sie können nicht mehr Geld handeln, als auf Ihrem Konto vorhanden ist.");
 										}
 										else
 										{
-											kontostandUSD = kontostandUSD - wechselUSDDouble;
-											kontostandEUR = kontostandEUR + wechselUSDDouble * USDzuEUR;
-											System.out.println("Sie haben erfolgreich " + wechselUSDDouble + " USD verkauft und " + wechselUSDDouble * USDzuEUR + " EUR gekauft.");
-											System.out.println("USD: " + kontostandUSD + "\tEUR: " + kontostandEUR);
+											kontostandUSD = kontostandUSD - wechselUSDDouble;//USD werden verkauft
+											kontostandEUR = kontostandEUR + wechselUSDDouble * USDzuEUR;//EUR werden gekauft
+											System.out.println("Sie haben erfolgreich " + wechselUSDDouble + " USD verkauft und " + wechselUSDDouble * USDzuEUR + " EUR gekauft.");//Bestätigung des Handels
+											System.out.println("USD: " + String.format("%1$,.2f", kontostandUSD) + "\tEUR: " + String.format("%1$,.2f", kontostandEUR));//Kontostände Ausgabe
 										}
 									}
-									else 
+									else //Das passiert wenn der Abbrechen Button gedrückt wird
 									{
 										System.out.println("\nSie haben das Programm beendet.");
 										System.exit(0);		
 									}
-									i++;
-									break;
+									break;//Verlassen des case
 								default:
-									i++;
-									break;
+									break;//Verlassen des case
 								}
 							}
 							catch (Exception e)//Catch Switch
 							{
 								System.out.println("Bitte nur Zahlen von 1 bis 3 eingeben!");
 							}
-							i ++; //Iteration von i
 							break; //Verlassen des case
 						case 3://EUR tauschen
 							try
@@ -474,75 +475,70 @@ public class bankomatV2 {
 								{
 								case 1: //Kauf CHF für EUR
 									System.out.println("Sie haben Sich entschieden CHF für EUR zu kaufen.");
-									String eurCHF = JOptionPane.showInputDialog("Wie viel EUR möchten Sie verkaufen?");
-									if (eurCHF != null)
+									String eurCHF = JOptionPane.showInputDialog("Wie viel EUR möchten Sie verkaufen?");//Abfrage wie viel EUR verkauft werden sollen
+									if (eurCHF != null)//Das passiert wenn der Abbrechen Button NICHT gedrückt wird
 									{
-										double wechselEURDouble = Double.parseDouble(eurCHF);
-										if (wechselEURDouble > kontostandCHF)
+										double wechselEURDouble = Double.parseDouble(eurCHF);//Eingabe wird in einen double umgewandelt
+										if (wechselEURDouble > kontostandCHF)//Wird ausgeführt wenn Eingabe grösser als Kontostand ist
 										{
 											System.out.println("Sie können nicht mehr Geld handeln, als auf Ihrem Konto vorhanden ist.");
 										}
 										else
 										{
-											kontostandEUR = kontostandEUR - wechselEURDouble;
-											kontostandCHF = kontostandCHF + wechselEURDouble * EURzuCHF;
-											System.out.println("Sie haben erfolgreich " + wechselEURDouble + " EUR verkauft und " + wechselEURDouble * EURzuCHF + " CHF gekauft.");
-											System.out.println("EUR: " + kontostandEUR + "\tCHF: " + kontostandCHF);
+											kontostandEUR = kontostandEUR - wechselEURDouble;//EUR werden verkauft
+											kontostandCHF = kontostandCHF + wechselEURDouble * EURzuCHF;//CHF werden gekauft
+											System.out.println("Sie haben erfolgreich " + wechselEURDouble + " EUR verkauft und " + wechselEURDouble * EURzuCHF + " CHF gekauft.");//Bestätigung des Handels
+											System.out.println("EUR: " + String.format("%1$,.2f", kontostandEUR) + "\tCHF: " + String.format("%1$,.2f", kontostandCHF));//Kontostände ausgabe
 										}
 									}
-									else 
+									else //Das passiert wenn der Abbrechen Button gedrückt wird
 									{
 										System.out.println("\nSie haben das Programm beendet.");
 										System.exit(0);		
 									}
-									i++;
-									break;
+									break;//Verlassen des case
 								case 2: //Kauf USD für EUR
 									System.out.println("Sie haben Sich entschieden USD für EUR zu kaufen.");
-									String eurUSD = JOptionPane.showInputDialog("Wie viel EUR möchten Sie verkaufen?");
-									if (eurUSD != null)
+									String eurUSD = JOptionPane.showInputDialog("Wie viel EUR möchten Sie verkaufen?");//Abfrage wie viel EUR verkauft werden sollen
+									if (eurUSD != null)//Das passiert wenn der Abbrechen Button NICHT gedrückt wird
 									{
-										double wechselEURDouble = Double.parseDouble(eurUSD);
-										if (wechselEURDouble > kontostandCHF)
+										double wechselEURDouble = Double.parseDouble(eurUSD);//Eingabe wird in einen double umgewandelt
+										if (wechselEURDouble > kontostandCHF)//Wird ausgeführt wenn Eingabe grösser als Kontostand ist
 										{
 											System.out.println("Sie können nicht mehr Geld handeln, als auf Ihrem Konto vorhanden ist.");
 										}
 										else
 										{
-											kontostandEUR = kontostandEUR - wechselEURDouble;
-											kontostandUSD = kontostandUSD + wechselEURDouble * EURzuUSD;
-											System.out.println("Sie haben erfolgreich " + wechselEURDouble + " EUR verkauft und " + wechselEURDouble * EURzuUSD + " USD gekauft.");
-											System.out.println("EUR: " + kontostandEUR + "\tUSD: " + kontostandUSD);
+											kontostandEUR = kontostandEUR - wechselEURDouble;//EUR werden verkauft
+											kontostandUSD = kontostandUSD + wechselEURDouble * EURzuUSD;//USD werden verkauft
+											System.out.println("Sie haben erfolgreich " + wechselEURDouble + " EUR verkauft und " + wechselEURDouble * EURzuUSD + " USD gekauft.");//Bestätigung des Handels
+											System.out.println("EUR: " + String.format("%1$,.2f", kontostandEUR) + "\tUSD: " + String.format("%1$,.2f", kontostandUSD));//Kontostände ausgabe
 										}
 									}
-									else 
+									else //Das passiert wenn der Abbrechen Button gedrückt wird
 									{
 										System.out.println("\nSie haben das Programm beendet.");
 										System.exit(0);		
 									}
-									i++;
-									break;
+									break;//Verlassen des case
 								default:
-									i++;
-									break;
+									break;//Verlassen des case
 								}
 							}
 							catch (Exception e)//Catch Switch
 							{
 								System.out.println("Bitte nur Zahlen von 1 bis 3 eingeben!");
 							}
-							i ++; //Iteration von i
 							break; //Verlassen des case
-						default: //TESTEN
-							i ++; //Iteration von i
+						default:
 								break; //Verlassen des case
 					}
 					i ++; //Iteration von i
 					break; //Verlassen des case
 				case 5://Kontostand anzeigen wurde ausgewählt
-					System.out.println("Ihr aktueller Kontostand lautet: " + kontostandCHF + ".- CHF.");
-					System.out.println("Ihr aktueller Kontostand lautet: " + kontostandEUR + ".- EUR.");
-					System.out.println("Ihr aktueller Kontostand lautet: " + kontostandUSD + ".- USD.");
+					System.out.println("Ihr aktueller Kontostand lautet: " + String.format("%1$,.2f", kontostandCHF) + ".- CHF.");
+					System.out.println("Ihr aktueller Kontostand lautet: " + String.format("%1$,.2f", kontostandEUR) + ".- EUR.");
+					System.out.println("Ihr aktueller Kontostand lautet: " + String.format("%1$,.2f", kontostandUSD) + ".- USD.");
 					i ++; //Iteration von i
 					break; //Verlassen des case
 				default://Standardaktion bei ungültiger Eingabe 

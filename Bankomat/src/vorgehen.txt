@@ -19,9 +19,7 @@ Ablauf:
 
 
 TODO: (Testing)
-geldwechsel kommentieren und variablenname kontrollieren wenn funktion fertig --> aufpassen mit der iteration von i und den break --> debuggen um richtige anzahl zu ermitteln
-einmalige pinänderung einbauen --> output: nur alle sieben tage möglich sorry :(
-einzahlung und auszahlung in USD,EUR und CHF möglich machen
+eine .jar version mit PopUp erstellen
 
 DANACH(?):
 Raspberry als Linux/Win 10 IoT(?) Server aufsetzen und eine Datenbank anbingung herstellen.
