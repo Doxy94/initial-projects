@@ -1,6 +1,7 @@
 package bankomatV2;
 import javax.swing.JOptionPane;
 
+//Klasse mit den Methoden für die PIN
 class Pinklasse 
 {
 	//Instantvariable deklarieren
@@ -12,13 +13,14 @@ class Pinklasse
 		return standard;
 	}
 	//Methode zum ändern
-	void aendern(int aenderung)
+	int aendern(int pinBestaetigung) //WIESO WIRD DAS NICHT VERWENDET?!?!?!?!?
 	{
-		pin = aenderung;
+		pin = pinBestaetigung;
+		return pin;
 	}
 }
 
-//Klasse Konto erstellen
+//Klasse mit den Methoden für die Konten
 class Kontoklasse 
 {
 	//Instanzvariable
@@ -57,37 +59,42 @@ class Kontoklasse
 	}
 }
 
+	class Geldklasse{
+		//Instanzvariablen 
+	}
 public class bankomatV2 {
 	public static void main (String[] args) {	
 		
-		//Variablen deklaration
-		boolean bankkarte,pinGeaendert; //Bankkarte nicht vorhanden
-		String kartenEingabe,switchEingabe,pinKontrolle,pinBestaetigung,pinEingabeNeu;	//Alle Eingaben, die später in Zahlen umgewandelt werden
-		int pinAlt,pinNeu,pinInteger,zaehlerFOR,switchCase,pinEingabe,switchGeldWechseln,switchHandel;
+		/***********************
+		 *Variablen und Klassen*
+		 ***********************/
 		
-		//Initialisierung
-		pinInteger = 0;
+		//Variablen werden deklariert
+		boolean bankkarte,pinGeaendert; //Bedingungen
+		String kartenEingabe,switchEingabe;	//Alle Eingaben
+		int pinAlt,pinNeu,pinKontrolle,zaehlerFOR,switchCase,switchGeldWechseln,switchHandel;
+		
+		//Integers
+		pinKontrolle = 0;
 		zaehlerFOR = 0;
 		switchCase = 0;
 		switchGeldWechseln = 0;
 		switchHandel = 0;
-		pinEingabe = 0;
-		
+		//Boolische variablen
 		bankkarte = false;
 		pinGeaendert = false;
-		//Wechselkurse deklariert und initialisiert
+		
+		//Wechselkurse deklariert
 		double CHFzuUSD,CHFzuEUR,USDzuCHF,USDzuEUR,EURzuUSD,EURzuCHF;
-		//Wechselkurs Franken
+		//Wechselkurs Franken initialisiert
 		CHFzuUSD = 1.08;
 		CHFzuEUR = 1.01;
-		//Wechselkurs Dollar
+		//Wechselkurs Dollar initialisiert
 		USDzuCHF = 0.92;
 		USDzuEUR = 0.93;
-		//Wechselkurs Euro
+		//Wechselkurs Euro initialisiert
 		EURzuUSD = 1.06;
 		EURzuCHF = 0.98;
-		
-
 		
 		//Hier werden neue Bankkonten erstellt
 		Kontoklasse kontoCHF = new Kontoklasse();//Neues Konto für CHF wurde erstellt
@@ -102,9 +109,9 @@ public class bankomatV2 {
 		//Hier werden die PINs erstellt und Initialisiert
 		Pinklasse pin1 = new Pinklasse(); //Variable für den alten pin
 		pinAlt = pin1.initialisieren(1234); //PIN wird auf 1234 festgelegt
-		Pinklasse pin2 = new Pinklasse(); //Variable für den Neuen Pin
-		pinNeu = pin2.initialisieren(0); //Neuer PIN wird initialisiert damit man mit der Variable arbeiten kann
-		
+//		Pinklasse pin2 = new Pinklasse(); //Variable für den Neuen Pin
+//		pinNeu = pin2.initialisieren(0); //Neuer PIN wird initialisiert damit man mit der Variable arbeiten kann
+//		
 		/***************
 		 *HAUPTPROGRAMM*
 		 ***************/
@@ -112,17 +119,17 @@ public class bankomatV2 {
 		//Schleife zur Kartenabfrage
 		while (bankkarte == false) //Solange keine Karte vorhanden wird danach gefragt
 		{	
-				kartenEingabe = JOptionPane.showInputDialog(("Schreiben Sie 'Karte' um Ihre Bankkarte einzulegen!")); // Eingabe aufforderung
-				if (kartenEingabe == null) //Das passiert wenn Abbrechen gedrückt wird
+				kartenEingabe = JOptionPane.showInputDialog(("Schreiben Sie 'Karte' um Ihre Bankkarte einzulegen!")); //Eingabeaufforderung
+				if (kartenEingabe == null) //Das passiert, wenn Abbrechen gedrückt wird
 				{
 					System.out.println("Sie haben das Programm beendet.");
 					System.exit(0);
 				}
 				if (kartenEingabe.equalsIgnoreCase("Karte")) //Das passiert wenn Eingabe ist wie gefordert 
 				{
-					bankkarte = true; // Bankkarte ist vorhanden
+					bankkarte = true; //Bankkarte ist vorhanden
 				}
-				else // Das passiert wenn Eingabe nicht ist wie gefordert
+				else //Das passiert wenn Eingabe nicht ist wie gefordert
 				{
 					System.out.println("Bitte einfach nur 'Karte' schreiben."); 		
 				}
@@ -132,10 +139,10 @@ public class bankomatV2 {
 		{	
 			try //Try PIN Eingabe
 			{
-				String pinString = JOptionPane.showInputDialog("Geben Sie Ihren gültigen PIN ein!");//Eingabe des PIN
-				if (pinString != null) //Das passiert wenn NICHT Abbrechen gedrückt wird
+				String pinEingabe = JOptionPane.showInputDialog("Geben Sie Ihren gültigen PIN ein!"); //Eingabe des PIN
+				if (pinEingabe != null) //Das passiert wenn NICHT Abbrechen gedrückt wird
 				{
-					pinInteger = Integer.parseInt(pinString); //Einfrage wird in einen Integer umgewandelt 
+					pinKontrolle = Integer.parseInt(pinEingabe); //Einfrage wird in einen Integer umgewandelt 
 				}
 				else //Das passiert wenn Abbrechen gedrückt wird
 				{
@@ -148,7 +155,7 @@ public class bankomatV2 {
 			{
 				System.out.println("Bitte nur Zahlen eingeben.");
 			}			
-			if (pinInteger == pinAlt) //Das passiwert wenn der PIN richtig eingegeben wurde
+			if (pinKontrolle == pinAlt) //Das passiwert wenn der PIN richtig eingegeben wurde
 			{
 				//Begrüssung des Kunden
 				System.out.println("\nWilkommen bei der Bank Ihres vertrauens!");
@@ -156,7 +163,7 @@ public class bankomatV2 {
 				System.out.println("1: Pin ändern");
 				System.out.println("2: Geld abheben (nur CHF)");
 				System.out.println("3: Geld einzahlen (nur CHF)");
-				System.out.println("4: Geld wechseln");
+				System.out.println("4: Geld wechseln (CHF/USD/EUR)");
 				System.out.println("5: Kontostände Prüfen");
 				//Try Switch
 				try
@@ -189,29 +196,35 @@ public class bankomatV2 {
 					{
 						//Try pinKontrolle
 						try {
-							pinKontrolle = JOptionPane.showInputDialog("Geben Sie zunächst zur Kontrolle Ihren alten Pin ein.");//Der PIN wird abgefragt
-							if (pinKontrolle != null) //Das passiert wenn der Abbrechen Button NICHT gedrückt wird
+							String pinKontrolleAlt = JOptionPane.showInputDialog("Geben Sie zunächst zur Kontrolle Ihren alten Pin ein.");//Der PIN wird abgefragt
+							if (pinKontrolleAlt != null) //Das passiert wenn der Abbrechen Button NICHT gedrückt wird
 							{
-								pinEingabe = Integer.parseInt(pinKontrolle);	//Eingabe wird in einen Integer umgewandelt					
-								if (pinEingabe == pinAlt) //Eingabe wird mit PIN verglichen
+								int pinEingabeAlt = Integer.parseInt(pinKontrolleAlt);	//Eingabe wird in einen Integer umgewandelt					
+								if (pinEingabeAlt == pinAlt) //Eingabe wird mit PIN verglichen
 								{
-									//TRY PIN Änderung
-									pinEingabeNeu = JOptionPane.showInputDialog("Geben Sie nun den neuen Pin ein.");//Der neue PIN wird abgefragt
+									String pinEingabeNeu = JOptionPane.showInputDialog("Geben Sie nun den neuen Pin ein. \nDer PIN muss 4 bis 6 Ziffern enthalten.");//Der neue PIN wird abgefragt
+									pinNeu = Integer.parseInt(pinEingabeNeu);//Eingabe wird in einen Integer umgewandelt
 									if (pinEingabeNeu != null) //Das passiert wenn der Abbrechen Button NICHT gedrückt wird
 									{	
-										pinNeu = Integer.parseInt(pinEingabeNeu);//Eingabe wird in einen Integer umgewandelt
-										pinBestaetigung = JOptionPane.showInputDialog("Geben Sie den PIN zur Bestätigung erneut ein.");//Der neue PIN wird erneut zur Kontrolle erneut abgefragt
-										int pinKontrolleNeu = Integer.parseInt(pinBestaetigung); //Erneute Eingabe wird in einen Integer umgewandelt
-										if (pinBestaetigung != null && pinNeu == pinKontrolleNeu) //Das passiert wenn der Abbrechen Button NICHT gedrückt wurde UND wenn die neuen PINs identisch sind
+										if (pinEingabeNeu.length() > 3 && pinEingabeNeu.length() < 7)//Anzahl der eingegebenen Ziffern wird überprüft
 										{
-											System.out.println("Ihr PIN wurde erfolgreich geändert.");
-											pinAlt = pinNeu;//PIN wird geändert
-											pinGeaendert = true;
+											String pinBestaetigungNeu = JOptionPane.showInputDialog("Geben Sie den PIN zur Bestätigung erneut ein.");//Der neue PIN wird erneut zur Kontrolle erneut abgefragt
+											int pinKontrolleNeu = Integer.parseInt(pinBestaetigungNeu); //Erneute Eingabe wird in einen Integer umgewandelt
+											if (pinBestaetigungNeu != null && pinNeu == pinKontrolleNeu) //Das passiert wenn der Abbrechen Button NICHT gedrückt wurde UND wenn die neuen PINs identisch sind
+											{
+												System.out.println("Ihr PIN wurde erfolgreich geändert.");
+												pinAlt = pin1.aendern(pinNeu);;//PIN wird geändert
+												pinGeaendert = true;
+											}
+											else //Das passiert wenn die neuen PINs nicht miteinander übereinstimmen
+											{
+												System.out.println("Die PINs stimmen nicht miteinander überein.");
+												System.out.println("Versuchen Sie es erneut.");
+											}
 										}
-										else //Das passiert wenn die neuen PINs nicht miteinander übereinstimmen
+										else
 										{
-											System.out.println("Die PINs stimmen nicht miteinander überein.");
-											System.out.println("Versuchen Sie es erneut.");
+											System.out.println("Die PIN muss zwichen 4 und 6 Zahlen enthalten. Versuchen Sie es nach der Anmeldung erneut.");
 										}
 									}
 								}
@@ -224,7 +237,7 @@ public class bankomatV2 {
 							}
 						catch (Exception e) //Catch pinKontrolle
 						{
-							System.out.println("Sie haben Ihren PIN falsch eingegeben.");
+							System.out.println("Sie haben einen ungültigen PIN eingegeben.");
 							System.out.println("Bitte versuchen Sie es erneut.");
 						}
 					}
@@ -242,7 +255,7 @@ public class bankomatV2 {
 						{
 							int abheben = Integer.parseInt(abhebenEingabe);//Eingabe wird in einen Integer umgewandelt
 							kontostandCHF = kontoCHF.abheben(abheben); //Neuer Kontostand wird berechnet
-							System.out.println("Ihr neuer Kontostand lautet: " + String.format("%1$,.2f", kontostandCHF) + ".- CHF");//Kontostand output
+							System.out.println("Ihr Kontostand lautet: " + String.format("%1$,.2f", kontostandCHF) + ".- CHF");//Kontostand output
 						}
 						else //Das passiert wenn Abbrechen gedrückt wird
 						{
@@ -252,7 +265,7 @@ public class bankomatV2 {
 					}
 					catch (Exception e) //Catch Geld abheben
 					{
-						System.out.println("Bitte geben Sie nur ganze Zahlen ein.");
+						System.out.println("Ungültige Eingabe, bitte erneut versuchen.");
 					}			
 					i ++; //Iteration von i
 					break; //Verlassen des case
@@ -264,7 +277,7 @@ public class bankomatV2 {
 						{
 							int einzahlen = Integer.parseInt(einzahlenEingabe);//Eingabe wird in einen Integer umgewandelt
 							kontostandCHF = kontoCHF.einzahlen(einzahlen); //Neuer Kontostand wird berechnet
-							System.out.println("Ihr neuer Kontostand lautet: " + String.format("%1$,.2f", kontostandCHF) + ".- CHF"); //Kontostand output
+							System.out.println("Ihr Kontostand lautet: " + String.format("%1$,.2f", kontostandCHF) + ".- CHF"); //Kontostand output
 						}
 						else//Das passiert wenn Abbrechen gedrückt wird
 						{
@@ -274,7 +287,7 @@ public class bankomatV2 {
 					}
 					catch (Exception e)//Catch Geld einzahlen
 					{
-						System.out.println("Bitte geben Sie nur den Betrag ein, den Sie einzahlen möchten.");
+						System.out.println("Ungültige Eingabe, bitte erneut versuchen.");
 					}
 					i ++; //Iteration von i
 					break; //Verlassen des case
@@ -369,8 +382,6 @@ public class bankomatV2 {
 											System.exit(0);		
 										}
 										break; //Verlassen des case
-									default:
-										break; //Verlassen des case
 									}
 								}
 								catch (Exception e)//Catch Switch
@@ -444,8 +455,6 @@ public class bankomatV2 {
 										System.out.println("\nSie haben das Programm beendet.");
 										System.exit(0);		
 									}
-									break;//Verlassen des case
-								default:
 									break;//Verlassen des case
 								}
 							}
@@ -521,8 +530,6 @@ public class bankomatV2 {
 										System.exit(0);		
 									}
 									break;//Verlassen des case
-								default:
-									break;//Verlassen des case
 								}
 							}
 							catch (Exception e)//Catch Switch
@@ -530,8 +537,6 @@ public class bankomatV2 {
 								System.out.println("Bitte nur Zahlen von 1 bis 3 eingeben!");
 							}
 							break; //Verlassen des case
-						default:
-								break; //Verlassen des case
 					}
 					i ++; //Iteration von i
 					break; //Verlassen des case
@@ -539,9 +544,6 @@ public class bankomatV2 {
 					System.out.println("Ihr aktueller Kontostand lautet: " + String.format("%1$,.2f", kontostandCHF) + ".- CHF.");
 					System.out.println("Ihr aktueller Kontostand lautet: " + String.format("%1$,.2f", kontostandEUR) + ".- EUR.");
 					System.out.println("Ihr aktueller Kontostand lautet: " + String.format("%1$,.2f", kontostandUSD) + ".- USD.");
-					i ++; //Iteration von i
-					break; //Verlassen des case
-				default://Standardaktion bei ungültiger Eingabe 
 					i ++; //Iteration von i
 					break; //Verlassen des case
 				}

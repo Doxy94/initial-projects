@@ -19,7 +19,4 @@ Ablauf:
 
 
 TODO: (Testing)
-eine .jar version mit PopUp erstellen
-
-DANACH(?):
-Raspberry als Linux/Win 10 IoT(?) Server aufsetzen und eine Datenbank anbingung herstellen.
+Geldwechsel als Methode implementieren, sodass nur noch ein aufruf nötig ist
