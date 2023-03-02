@@ -1,78 +1,17 @@
 package bankomatV2;
 import javax.swing.JOptionPane;
 
-//Klasse mit den Methoden für die PIN
-class Pinklasse 
-{
-	//Instantvariable deklarieren
-	int pin;
-	//Methode zum initialisieren
-	int initialisieren(int standard)
-	{
-		pin = standard; 
-		return standard;
-	}
-	//Methode zum ändern
-	int aendern(int pinBestaetigung) //WIESO WIRD DAS NICHT VERWENDET?!?!?!?!?
-	{
-		pin = pinBestaetigung;
-		return pin;
-	}
-}
-
-//Klasse mit den Methoden für die Konten
-class Kontoklasse 
-{
-	//Instanzvariable
-	double konto;
-	//Methode zum initialisieren
-	double initialisieren(double standard) 
-	{
-		konto = standard;
-		return konto;
-	}
-	//Methode zum Geld abheben
-	double abheben(double aenderung)
-	{
-		if (konto >= aenderung)
-		{
-		konto = konto - aenderung;
-		}
-		else 
-		{
-			System.out.println("Sie haben nicht genügend Geld auf dem Konto.");
-		}
-		return konto;
-	}
-	//Methode zum Geld einzahlen
-	double einzahlen(double aenderung)
-	{	
-		if (aenderung > 5000)
-		{
-			System.out.println("Für eine Einzahlung über 5.000 CHF müssen Sie einen Termin in der Filiale vereinbaren.");
-		}
-		else 
-		{
-			System.out.println("Ihr Geld wurde erfolgreich eingezahlt.");
-		}
-		return konto = konto + aenderung;
-	}
-}
-
-	class Geldklasse{
-		//Instanzvariablen 
-	}
-public class bankomatV2 {
+public class Hauptklasse {
 	public static void main (String[] args) {	
 		
-		/***********************
-		 *Variablen und Klassen*
-		 ***********************/
+		/*######################
+		 #Variablen und Klassen#
+		 #######################*/
 		
 		//Variablen werden deklariert
 		boolean bankkarte,pinGeaendert; //Bedingungen
 		String kartenEingabe,switchEingabe;	//Alle Eingaben
-		int pinAlt,pinNeu,pinKontrolle,zaehlerFOR,switchCase,switchGeldWechseln,switchHandel;
+		int pinAlt,pinNeu,pinKontrolle,zaehlerFOR,switchCase,switchGeldWechseln,switchHandel,abhebenFix;
 		
 		//Integers
 		pinKontrolle = 0;
@@ -80,21 +19,8 @@ public class bankomatV2 {
 		switchCase = 0;
 		switchGeldWechseln = 0;
 		switchHandel = 0;
-		//Boolische variablen
 		bankkarte = false;
 		pinGeaendert = false;
-		
-		//Wechselkurse deklariert
-		double CHFzuUSD,CHFzuEUR,USDzuCHF,USDzuEUR,EURzuUSD,EURzuCHF;
-		//Wechselkurs Franken initialisiert
-		CHFzuUSD = 1.08;
-		CHFzuEUR = 1.01;
-		//Wechselkurs Dollar initialisiert
-		USDzuCHF = 0.92;
-		USDzuEUR = 0.93;
-		//Wechselkurs Euro initialisiert
-		EURzuUSD = 1.06;
-		EURzuCHF = 0.98;
 		
 		//Hier werden neue Bankkonten erstellt
 		Kontoklasse kontoCHF = new Kontoklasse();//Neues Konto für CHF wurde erstellt
@@ -109,12 +35,10 @@ public class bankomatV2 {
 		//Hier werden die PINs erstellt und Initialisiert
 		Pinklasse pin1 = new Pinklasse(); //Variable für den alten pin
 		pinAlt = pin1.initialisieren(1234); //PIN wird auf 1234 festgelegt
-//		Pinklasse pin2 = new Pinklasse(); //Variable für den Neuen Pin
-//		pinNeu = pin2.initialisieren(0); //Neuer PIN wird initialisiert damit man mit der Variable arbeiten kann
-//		
-		/***************
-		 *HAUPTPROGRAMM*
-		 ***************/
+		
+		/*##############
+		 #HAUPTPROGRAMM#
+		 ###############*/
 				
 		//Schleife zur Kartenabfrage
 		while (bankkarte == false) //Solange keine Karte vorhanden wird danach gefragt
@@ -167,7 +91,9 @@ public class bankomatV2 {
 				System.out.println("5: Kontostände Prüfen");
 				//Try Switch
 				try
-				{	//Abfrage der auswahl was als nächstes getan werden soll
+				{	
+
+					//Abfrage der auswahl was als nächstes getan werden soll
 					switchEingabe = JOptionPane.showInputDialog("Was möchten Sie als nächstes tun? (1-5)");
 					if (switchEingabe != null) //Das passiert wenn der Abbrechen Button NICHT gedrückt wird
 					{
@@ -250,12 +176,16 @@ public class bankomatV2 {
 				case 2://Geld abheben wurde ausgewählt
 					try//Try Geld abheben
 					{	
+//						//Auswahl wie viel man abheben möchte
+//						System.out.println("Wählen Sie, wie viel Sie abheben möchten:");
+//						System.out.println("50 CHF\t\t100 CHF");
+//						System.out.println("150 CHF\t\t200 CHF");
+//						System.out.println("250 CHF\t\t500 CHF");
 						String abhebenEingabe = JOptionPane.showInputDialog("Wie viel Geld möchten Sie abheben?"); //Abfrage wie viel geld Abgehoben werden soll
 						if (abhebenEingabe != null)//Das passiert wenn der Abbrechen Button NICHT gedrückt wurde
 						{
 							int abheben = Integer.parseInt(abhebenEingabe);//Eingabe wird in einen Integer umgewandelt
 							kontostandCHF = kontoCHF.abheben(abheben); //Neuer Kontostand wird berechnet
-							System.out.println("Ihr Kontostand lautet: " + String.format("%1$,.2f", kontostandCHF) + ".- CHF");//Kontostand output
 						}
 						else //Das passiert wenn Abbrechen gedrückt wird
 						{
@@ -347,8 +277,8 @@ public class bankomatV2 {
 											else
 											{
 												kontostandCHF = kontostandCHF - wechselCHFDouble; //CHF werden verkauft
-												kontostandUSD = kontostandUSD + wechselCHFDouble * CHFzuUSD; // USD werden gekauft
-												System.out.println("Sie haben erfolgreich " + wechselCHFDouble + " CHF verkauft und " + String.format("%1$,.2f", wechselCHFDouble * CHFzuUSD) + " USD gekauft."); //Bestätigung des handels
+												kontostandUSD = kontostandUSD + Kontoklasse.CHFzuUSD(wechselCHFDouble); // USD werden gekauft
+												System.out.println("Sie haben erfolgreich " + String.format("%1$,.2f", wechselCHFDouble) + " CHF verkauft und " + String.format("%1$,.2f", Kontoklasse.CHFzuUSD(wechselCHFDouble)) + " USD gekauft."); //Bestätigung des handels
 												System.out.println("Ihre aktuellen Kontostände lauten: CHF: " + String.format("%1$,.2f", kontostandCHF) + "\tUSD: " + String.format("%1$,.2f", kontostandUSD)); //Kontostände ausgabe
 											}
 										}
@@ -371,8 +301,8 @@ public class bankomatV2 {
 											else
 											{
 												kontostandCHF = kontostandCHF - wechselCHFDouble;//CHF werden verkauft
-												kontostandEUR = kontostandEUR + wechselCHFDouble * CHFzuEUR;// EUR werden gekauft
-												System.out.println("Sie haben erfolgreich " + wechselCHFDouble + " CHF verkauft und " + String.format("%1$,.2f", wechselCHFDouble * CHFzuEUR) + " EUR gekauft.");//Bestätigung des handels
+												kontostandEUR = kontostandEUR + Kontoklasse.CHFzuEUR(wechselCHFDouble);// EUR werden gekauft
+												System.out.println("Sie haben erfolgreich " + String.format("%1$,.2f", wechselCHFDouble) + " CHF verkauft und " + String.format("%1$,.2f", Kontoklasse.CHFzuEUR(wechselCHFDouble)) + " EUR gekauft.");//Bestätigung des handels
 												System.out.println("CHF: " + String.format("%1$,.2f", kontostandCHF) + "\tEUR: " + String.format("%1$,.2f", kontostandEUR));//Kontostände ausgabe
 											}
 										}
@@ -421,8 +351,8 @@ public class bankomatV2 {
 										else
 										{
 											kontostandUSD = kontostandUSD - wechselUSDDouble;//USD werden verkauft
-											kontostandCHF = kontostandCHF + wechselUSDDouble * USDzuCHF; //CHF werden gekauft
-											System.out.println("Sie haben erfolgreich " + wechselUSDDouble + " USD verkauft und " + String.format("%1$,.2f", wechselUSDDouble * USDzuCHF) + " CHF gekauft."); //Bestätigung des Handels
+											kontostandCHF = kontostandCHF + Kontoklasse.USDzuCHF(wechselUSDDouble); //CHF werden gekauft
+											System.out.println("Sie haben erfolgreich " + String.format("%1$,.2f", wechselUSDDouble) + " USD verkauft und " + String.format("%1$,.2f", Kontoklasse.USDzuCHF(wechselUSDDouble)) + " CHF gekauft."); //Bestätigung des Handels
 											System.out.println("USD: " + String.format("%1$,.2f", kontostandUSD) + "\tCHF: " + String.format("%1$,.2f", kontostandCHF)); //Kontostände Ausgabe
 										}
 									}
@@ -445,8 +375,8 @@ public class bankomatV2 {
 										else
 										{
 											kontostandUSD = kontostandUSD - wechselUSDDouble;//USD werden verkauft
-											kontostandEUR = kontostandEUR + wechselUSDDouble * USDzuEUR;//EUR werden gekauft
-											System.out.println("Sie haben erfolgreich " + wechselUSDDouble + " USD verkauft und " + wechselUSDDouble * USDzuEUR + " EUR gekauft.");//Bestätigung des Handels
+											kontostandEUR = kontostandEUR + Kontoklasse.USDzuEUR(wechselUSDDouble);//EUR werden gekauft
+											System.out.println("Sie haben erfolgreich " + String.format("%1$,.2f", wechselUSDDouble) + " USD verkauft und " + String.format("%1$,.2f", Kontoklasse.USDzuEUR(wechselUSDDouble)) + " EUR gekauft.");//Bestätigung des Handels
 											System.out.println("USD: " + String.format("%1$,.2f", kontostandUSD) + "\tEUR: " + String.format("%1$,.2f", kontostandEUR));//Kontostände Ausgabe
 										}
 									}
@@ -495,8 +425,8 @@ public class bankomatV2 {
 										else
 										{
 											kontostandEUR = kontostandEUR - wechselEURDouble;//EUR werden verkauft
-											kontostandCHF = kontostandCHF + wechselEURDouble * EURzuCHF;//CHF werden gekauft
-											System.out.println("Sie haben erfolgreich " + wechselEURDouble + " EUR verkauft und " + wechselEURDouble * EURzuCHF + " CHF gekauft.");//Bestätigung des Handels
+											kontostandCHF = kontostandCHF + Kontoklasse.EURzuCHF(wechselEURDouble);//CHF werden gekauft
+											System.out.println("Sie haben erfolgreich " + String.format("%1$,.2f", wechselEURDouble) + " EUR verkauft und " + String.format("%1$,.2f", Kontoklasse.EURzuCHF(wechselEURDouble)) + " CHF gekauft.");//Bestätigung des Handels
 											System.out.println("EUR: " + String.format("%1$,.2f", kontostandEUR) + "\tCHF: " + String.format("%1$,.2f", kontostandCHF));//Kontostände ausgabe
 										}
 									}
@@ -519,8 +449,8 @@ public class bankomatV2 {
 										else
 										{
 											kontostandEUR = kontostandEUR - wechselEURDouble;//EUR werden verkauft
-											kontostandUSD = kontostandUSD + wechselEURDouble * EURzuUSD;//USD werden verkauft
-											System.out.println("Sie haben erfolgreich " + wechselEURDouble + " EUR verkauft und " + wechselEURDouble * EURzuUSD + " USD gekauft.");//Bestätigung des Handels
+											kontostandUSD = kontostandUSD + Kontoklasse.EURzuUSD(wechselEURDouble);//USD werden verkauft
+											System.out.println("Sie haben erfolgreich " + String.format("%1$,.2f", wechselEURDouble) + " EUR verkauft und " + String.format("%1$,.2f", Kontoklasse.EURzuUSD(wechselEURDouble)) + " USD gekauft.");//Bestätigung des Handels
 											System.out.println("EUR: " + String.format("%1$,.2f", kontostandEUR) + "\tUSD: " + String.format("%1$,.2f", kontostandUSD));//Kontostände ausgabe
 										}
 									}

@@ -19,4 +19,8 @@ Ablauf:
 
 
 TODO: (Testing)
-Geldwechsel als Methode implementieren, sodass nur noch ein aufruf nötig ist
+Wenn man in die Exception kommt muss iteriert werden sonst wird das programm nach 3 fehleingaben beendet ohne etwas auszugeben
+Geldwechselmethoden Debuggen iwas stimmt da nicht mit output und der umrechnung --> siehe Kontoklasse (Bei der Methode zum verkauf von USD wird es zwar alles korrekt ausgeführt, aber es gibt keinene output ausser der exception
+Beim Abheben, fixe abfragen wie viel (20,50,100,200,500,anderer Betrag)
+Sobald etwas mit dem Konto passiert (geld transfer) fragen ob quittung gedruckt werden soll
+Main Methode kürzen und übersichtlicher machen
