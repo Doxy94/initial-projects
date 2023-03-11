@@ -19,4 +19,5 @@ Ablauf:
 
 
 TODO: (Testing)
-Geldwechsel als Methode implementieren, sodass nur noch ein aufruf nötig ist
+Geldwechsel + alle methoden der Kontoklasse durchtesten
++ Pinklasse erstellen und separieren --> Danach testen
